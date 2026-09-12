@@ -1,247 +1,470 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيد ميلاد سعيد يا أسماء</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيد ميلاد سعيد أسماء 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        body {
-            height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            font-family: 'Cairo', sans-serif;
-            position: relative;
-            color: white;
-        }
+  :root {
+    --purple: #7b2ff7;
+    --pink: #f72585;
+    --blue: #4cc9f0;
+    --gold: #ffd700;
+  }
 
-        /* خلفية نجوم */
-        .stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, white, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, white, transparent),
-                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 160px 120px, white, transparent);
-            background-size: 200px 200px;
-            animation: twinkle 8s ease-in-out infinite;
-            opacity: 0.6;
-        }
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Cairo', sans-serif;
+    background: #05010f;
+  }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.9; }
-        }
+  body {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #1b0b3b 0%, #05010f 60%, #000000 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-        /* الطائرة واللافتة */
-        .plane-wrapper {
-            position: absolute;
-            top: 38%;
-            left: -500px;
-            display: flex;
-            align-items: center;
-            gap: 0;
-            animation: flyModern 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            z-index: 20;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
-        }
+  /* ===== النجوم المتحركة ===== */
+  #stars-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
 
-        @keyframes flyModern {
-            0% {
-                left: -500px;
-                top: 42%;
-                transform: scale(0.9);
-            }
-            50% {
-                top: 32%;
-                transform: scale(1);
-            }
-            100% {
-                left: 115%;
-                top: 28%;
-                transform: scale(0.95);
-            }
-        }
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glow-orb.one {
+    width: 300px; height: 300px;
+    background: var(--purple);
+    top: 10%; right: 5%;
+    animation: floatOrb 8s ease-in-out infinite;
+  }
+  .glow-orb.two {
+    width: 250px; height: 250px;
+    background: var(--pink);
+    bottom: 15%; left: 8%;
+    animation: floatOrb 10s ease-in-out infinite reverse;
+  }
+  .glow-orb.three {
+    width: 200px; height: 200px;
+    background: var(--blue);
+    top: 50%; left: 45%;
+    animation: floatOrb 12s ease-in-out infinite;
+  }
+  @keyframes floatOrb {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px,-30px) scale(1.15); }
+  }
 
-        /* طائرة SVG عصرية */
-        .plane {
-            width: 90px;
-            height: 50px;
-            position: relative;
-            z-index: 3;
-        }
+  /* ===== الطائرة واللافتة ===== */
+  .plane-wrap {
+    position: fixed;
+    top: 18%;
+    right: -40%;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    animation: flyAcross 9s linear forwards;
+    white-space: nowrap;
+  }
 
-        .plane svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 12px rgba(100, 200, 255, 0.6));
-        }
+  @keyframes flyAcross {
+    0%   { right: -60%; opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { right: 130%; opacity: 0; }
+  }
 
-        /* الحبل المتوهج */
-        .rope {
-            width: 55px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #a0e9ff, #ffffff);
-            margin-right: -8px;
-            position: relative;
-            box-shadow: 0 0 8px rgba(160, 233, 255, 0.8);
-        }
+  .plane {
+    font-size: 3rem;
+    transform: scaleX(-1);
+    filter: drop-shadow(0 0 12px rgba(255,255,255,0.6));
+    animation: bobPlane 2.2s ease-in-out infinite;
+  }
 
-        /* اللافتة العصرية */
-        .banner {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 16px;
-            font-size: 20px;
-            font-weight: 700;
-            white-space: nowrap;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            letter-spacing: 0.5px;
-        }
+  @keyframes bobPlane {
+    0%, 100% { transform: scaleX(-1) translateY(0); }
+    50% { transform: scaleX(-1) translateY(-10px); }
+  }
 
-        .banner::before {
-            content: '';
-            position: absolute;
-            left: -14px;
-            top: 50%;
-            transform: translateY(-50%);
-            border-top: 14px solid transparent;
-            border-bottom: 14px solid transparent;
-            border-right: 14px solid rgba(255, 255, 255, 0.15);
-        }
+  .banner {
+    margin-right: 10px;
+    background: linear-gradient(90deg, rgba(123,47,247,0.85), rgba(247,37,133,0.85));
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 0 20px rgba(247,37,133,0.5);
+    position: relative;
+  }
+  .banner::after {
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 10px 0 10px 12px;
+    border-color: transparent transparent transparent rgba(247,37,133,0.85);
+  }
 
-        .banner span {
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-        }
+  /* ===== زر الفتح ===== */
+  .open-btn {
+    position: relative;
+    z-index: 5;
+    padding: 16px 45px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(247,37,133,0.6), 0 0 50px rgba(123,47,247,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulseBtn 2.5s ease-in-out infinite;
+  }
+  .open-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 0 35px rgba(247,37,133,0.8), 0 0 70px rgba(123,47,247,0.6);
+  }
+  @keyframes pulseBtn {
+    0%, 100% { box-shadow: 0 0 25px rgba(247,37,133,0.6), 0 0 50px rgba(123,47,247,0.4); }
+    50% { box-shadow: 0 0 35px rgba(247,37,133,0.9), 0 0 70px rgba(123,47,247,0.6); }
+  }
+  .open-btn.hidden {
+    display: none;
+  }
 
-        /* نص سفلي أنيق */
-        .bottom-text {
-            position: absolute;
-            bottom: 50px;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-        }
+  /* ===== بطاقة التهنئة ===== */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    padding: 20px;
+  }
+  .overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
 
-        .bottom-text h1 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(90deg, #fff, #a0e9ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(160, 233, 255, 0.3);
-        }
+  .card {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 28px;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 8px 40px rgba(123,47,247,0.35), 0 0 80px rgba(247,37,133,0.2);
+    padding: 45px 30px 35px;
+    text-align: center;
+    color: #fff;
+    transform: scale(0.7) translateY(40px);
+    opacity: 0;
+    transition: all 0.7s cubic-bezier(.17,.89,.32,1.28);
+  }
+  .overlay.show .card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 
-        .bottom-text p {
-            font-size: 16px;
-            opacity: 0.75;
-            letter-spacing: 1px;
-        }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 28px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--gold), var(--pink), var(--purple), var(--blue));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
+    pointer-events: none;
+  }
 
-        /* جزيئات متوهجة */
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #a0e9ff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #a0e9ff;
-            animation: rise 7s linear infinite;
-            opacity: 0;
-        }
+  .card .icon-top {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+    animation: swing 3s ease-in-out infinite;
+  }
+  @keyframes swing {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+  }
 
-        @keyframes rise {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            15% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1.5);
-                opacity: 0;
-            }
-        }
+  .card h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--gold), var(--pink), var(--blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
 
-        /* توهج خفيف في الوسط */
-        .glow {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(100, 180, 255, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-        }
-    </style>
+  .card p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 2;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 12px;
+  }
+
+  .signature {
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold);
+    opacity: 0.9;
+  }
+
+  .close-btn {
+    margin-top: 25px;
+    padding: 12px 35px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  .close-btn:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* ===== قلوب متطايرة ===== */
+  .heart {
+    position: fixed;
+    bottom: -10%;
+    font-size: 1.5rem;
+    z-index: 15;
+    pointer-events: none;
+    animation: floatHeart linear forwards;
+    opacity: 0.9;
+  }
+  @keyframes floatHeart {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) translateX(var(--drift)) rotate(360deg); opacity: 0; }
+  }
+
+  /* ===== ألعاب نارية ===== */
+  .firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    z-index: 15;
+    pointer-events: none;
+  }
+
+  /* ===== تجاوب مع الجوال ===== */
+  @media (max-width: 600px) {
+    .banner { font-size: 0.85rem; padding: 8px 16px; }
+    .plane { font-size: 2.2rem; }
+    .card h1 { font-size: 1.5rem; }
+    .card p { font-size: 0.95rem; }
+    .open-btn { padding: 14px 32px; font-size: 1rem; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="stars"></div>
-    <div class="glow"></div>
+<canvas id="stars-canvas"></canvas>
+<div class="glow-orb one"></div>
+<div class="glow-orb two"></div>
+<div class="glow-orb three"></div>
 
-    <!-- جزيئات -->
-    <div class="particle" style="left: 12%; animation-delay: 0s;"></div>
-    <div class="particle" style="left: 28%; animation-delay: 1.8s; width: 4px; height: 4px;"></div>
-    <div class="particle" style="left: 45%; animation-delay: 3.2s;"></div>
-    <div class="particle" style="left: 62%; animation-delay: 0.7s; width: 5px; height: 5px;"></div>
-    <div class="particle" style="left: 78%; animation-delay: 2.5s;"></div>
-    <div class="particle" style="left: 90%; animation-delay: 4.1s; width: 3px; height: 3px;"></div>
+<div class="plane-wrap" id="planeWrap">
+  <div class="banner">🎈 عيد ميلاد سعيد يا أسماء 🎂</div>
+  <div class="plane">✈️</div>
+</div>
 
-    <!-- الطائرة -->
-    <div class="plane-wrapper">
-        <div class="plane">
-            <svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- جسم الطائرة -->
-                <path d="M5 25 L70 22 L85 25 L70 28 Z" fill="#e8f4ff"/>
-                <!-- الجناح العلوي -->
-                <path d="M35 25 L50 8 L58 10 L45 25 Z" fill="#b8d4f0"/>
-                <!-- الجناح السفلي -->
-                <path d="M35 25 L50 42 L58 40 L45 25 Z" fill="#b8d4f0"/>
-                <!-- الذيل -->
-                <path d="M5 25 L12 15 L18 17 L12 25 Z" fill="#90c0e8"/>
-                <path d="M5 25 L12 35 L18 33 L12 25 Z" fill="#90c0e8"/>
-                <!-- النافذة -->
-                <circle cx="62" cy="25" r="4" fill="#4fc3f7"/>
-                <!-- ضوء أمامي -->
-                <circle cx="82" cy="25" r="3" fill="#fff" opacity="0.9"/>
-            </svg>
-        </div>
-        <div class="rope"></div>
-        <div class="banner">
-            <span>عيد ميلاد سعيد يا أسماء</span> ✨
-        </div>
-    </div>
+<button class="open-btn" id="openBtn">🎁 اضغطي هنا يا أسماء</button>
 
-    <div class="bottom-text">
-        <h1>كل سنة وأنتِ أجمل</h1>
-        <p>أسماء · يوم ميلادك مميز</p>
-    </div>
+<div class="overlay" id="overlay">
+  <div class="card">
+    <div class="icon-top">🎉</div>
+    <h1>كل عام وأنتِ بألف خير يا أسماء</h1>
+    <p>
+      في يوم ميلادك، أحببت أن أهديكِ لحظة صغيرة من السعادة، تعبيرًا بسيطًا عن مدى تقديري لوجودك في حياتي.
+      أنتِ إنسانة نادرة، طيبة القلب، وحضورك وحده يضيء الأيام.
+    </p>
+    <p>
+      أتمنى لكِ سنة مليئة بالفرح والضحك، وأحلامًا تتحقق واحدة تلو الأخرى، وصحة وسعادة لا تفارقانك أبدًا.
+      شكرًا لأنكِ صديقة بهذا الجمال. 💜
+    </p>
+    <div class="signature"> بكل حب لك من عدنان 🌸</div>
+    <button class="close-btn" id="closeBtn">إغلاق</button>
+  </div>
+</div>
+
+<script>
+  /* ===== خلفية النجوم ===== */
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    createStars();
+  }
+
+  function createStars() {
+    const count = Math.floor((canvas.width * canvas.height) / 4000);
+    stars = [];
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.3,
+        speed: Math.random() * 0.015 + 0.003,
+        alpha: Math.random(),
+        direction: Math.random() > 0.5 ? 1 : -1
+      });
+    }
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.alpha += s.speed * s.direction;
+      if (s.alpha <= 0.1 || s.alpha >= 1) s.direction *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(255,255,255,0.8)';
+      ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  drawStars();
+
+  /* ===== إظهار البطاقة ===== */
+  const overlay = document.getElementById('overlay');
+  const openBtn = document.getElementById('openBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  let opened = false;
+
+  function openCard() {
+    if (opened) return;
+    opened = true;
+    overlay.classList.add('show');
+    openBtn.classList.add('hidden');
+    launchHearts();
+    launchFireworks();
+  }
+
+  openBtn.addEventListener('click', openCard);
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('show');
+  });
+
+  // فتح تلقائي بعد أن تعبر الطائرة الشاشة
+  setTimeout(openCard, 8500);
+
+  /* ===== قلوب متطايرة ===== */
+  function launchHearts() {
+    const heartsArr = ['💜','💗','💛','💙','✨'];
+    for (let i = 0; i < 40; i++) {
+      setTimeout(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = heartsArr[Math.floor(Math.random() * heartsArr.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.setProperty('--drift', (Math.random() * 200 - 100) + 'px');
+        heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+        heart.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, i * 120);
+    }
+  }
+
+  /* ===== ألعاب نارية ===== */
+  function launchFireworks() {
+    const colors = ['#ffd700', '#f72585', '#7b2ff7', '#4cc9f0', '#ffffff'];
+    let bursts = 0;
+    const interval = setInterval(() => {
+      createBurst(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight * 0.6 + 40,
+        colors[Math.floor(Math.random() * colors.length)]
+      );
+      bursts++;
+      if (bursts > 6) clearInterval(interval);
+    }, 500);
+  }
+
+  function createBurst(x, y, color) {
+    const particleCount = 26;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('firework');
+      particle.style.background = color;
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.boxShadow = `0 0 8px 2px ${color}`;
+      document.body.appendChild(particle);
+
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const distance = 60 + Math.random() * 70;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+
+      particle.animate([
+        { transform: 'translate(0,0)', opacity: 1 },
+        { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }
+      ], {
+        duration: 900 + Math.random() * 400,
+        easing: 'cubic-bezier(.17,.67,.5,1)'
+      });
+
+      setTimeout(() => particle.remove(), 1400);
+    }
+  }
+</script>
 
 </body>
 </html>
